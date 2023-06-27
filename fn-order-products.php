@@ -16,12 +16,17 @@ class Order_By_Stock {
 	}
 
 	public function add_actions() {
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'pre_get_posts', array( $this, 'fn_change_products_order' ), 50 );
 		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'fn_render_outofstock_label' ), 1 );
 	}
 
 	protected function add_filters() {
 		add_filter( 'posts_clauses', array( $this, 'fn_change_posts_clauses'), 50, 2 );
+	}
+
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'fn-style', plugin_dir_url( __FILE__ ) . 'assets/style.css' );
 	}
 
 	public function fn_set_stock_meta_query( \WP_Query $query ) {
