@@ -17,6 +17,7 @@ class Order_By_Stock {
 
 	public function add_actions() {
 		add_action( 'pre_get_posts', array( $this, 'fn_change_products_order' ), 50 );
+		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'fn_render_outofstock_label' ), 1 );
 	}
 
 	protected function add_filters() {
@@ -76,6 +77,14 @@ class Order_By_Stock {
 			$order_by_stock .= ', ';
 		$clauses['orderby'] = $order_by_stock . $clauses['orderby'];
 		return $clauses;
+	}
+
+	public function fn_render_outofstock_label() {
+		global $product;
+
+		if ( $product->is_in_stock() )
+			return;
+		require_once plugin_dir_path( __FILE__ ) . 'templates/out-of-stock.php';
 	}
 
 	protected function orderby_string_to_array( string $string_order_by, string $order_value ) {
