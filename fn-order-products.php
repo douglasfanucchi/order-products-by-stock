@@ -4,6 +4,8 @@
  * Author: Douglas Fanucchi
  * Description: This plugins makes products that does not have stock available to be the last shown.
  * Author URI: https://github.com/douglasfanucchi
+ * Text Domain: fn-order-products
+ * Domain Path: /languages
  * Version 1.0
  */
 
@@ -19,6 +21,7 @@ class Order_By_Stock {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'pre_get_posts', array( $this, 'fn_change_products_order' ), 50 );
 		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'fn_render_outofstock_label' ), 1 );
+		add_action( 'init', array( $this, 'load_text_domain' ) );
 	}
 
 	protected function add_filters() {
@@ -119,6 +122,14 @@ class Order_By_Stock {
 			if ($condition == true)
 				return true;
 		return false;
+	}
+
+	public function load_text_domain() {
+		load_plugin_textdomain(
+			'fn-order-products',
+			false,
+			plugin_basename( dirname( __FILE__ ) ) . '/languages'
+		);
 	}
 }
 
