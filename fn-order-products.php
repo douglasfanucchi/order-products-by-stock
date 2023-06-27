@@ -2,6 +2,7 @@
 /**
  * Plugin Name: Order By Stock
  * Author: Douglas Fanucchi
+ * Description: This plugins makes products that does not have stock available to be the last shown.
  * Author URI: https://github.com/douglasfanucchi
  * Version 1.0
  */
